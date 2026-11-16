@@ -1,10 +1,12 @@
 import React from 'react';
-import { Footprints, Armchair, Watch } from 'lucide-react';
+import { Footprints, Armchair, Watch, Glasses, Shield } from 'lucide-react';
 
 const PRODUCT_ICONS = {
   shoe: Footprints,
   chair: Armchair,
   watch: Watch,
+  sunglasses: Glasses,
+  helmet: Shield,
 };
 
 /**

@@ -32,10 +32,12 @@ Featuring dynamic 3D model switching, 60fps color transition (lerping), interact
 - **Reset Camera**: Instantly animate camera and focal target back to default framing.
 
 ### 2. Product Switcher
-- **3 Sample CC0 Products**:
-  1. **Aerostride Pro Runner**: Athletic sneaker with customizable upper body.
+- **5 Curated Products**:
+  1. **Aerostride Pro Runner**: Athletic sneaker with customizable upper mesh body.
   2. **Nordic Sheen Lounge Chair**: Scandinavian accent chair with customizable velvet fabric, solid hardwood legs, and brass hardware.
   3. **Acro Chronograph Watch**: Luxury timepiece with customizable carbon strap, bezel ring, dial face, pushers, and hands.
+  4. **Spectra Avant Sunglasses**: Designer sunglasses with customizable acetate frames, polarized lenses, metal temples, and earhook tips.
+  5. **Apex Cyber Combat Helmet**: Ballistic sci-fi tactical helmet with customizable armor shell finish.
 - **Smooth Switch Transitions**: Animated entrance scaling and camera recalibration when alternating between items.
 - **Centralized Data Config**: Configured cleanly in [`src/data/products.js`](src/data/products.js) with specs, pricing, camera limits, and material palettes.
 
@@ -139,6 +141,8 @@ The 3D assets are already bundled in the `/public/models/` folder:
 | `shoe.glb` | MaterialsVariantsShoe | [KhronosGroup glTF-Sample-Assets](https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/MaterialsVariantsShoe) | CC0 / Sample Asset |
 | `chair.glb` | SheenChair | [KhronosGroup glTF-Sample-Assets](https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/SheenChair) | CC0 / Sample Asset |
 | `watch.glb` | ChronographWatch | [KhronosGroup glTF-Sample-Assets](https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/ChronographWatch) | CC0 / Sample Asset |
+| `sunglasses.glb` | SunglassesKhronos | [KhronosGroup glTF-Sample-Assets](https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/SunglassesKhronos) | CC0 / Sample Asset |
+| `helmet.glb` | DamagedHelmet | [KhronosGroup glTF-Sample-Assets](https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/DamagedHelmet) | CC0 / Sample Asset |
 
 *Note: All models are downloaded and ready to use out-of-the-box. No manual downloads are required.*
 

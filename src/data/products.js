@@ -215,6 +215,137 @@ export const PRODUCTS = [
       },
     ],
   },
+  {
+    id: 'sunglasses',
+    name: 'Spectra Avant Sunglasses',
+    category: 'Eyewear & Accessories',
+    badge: 'New Arrival',
+    price: '$249.00',
+    rating: 4.9,
+    reviews: 118,
+    description:
+      'Precision-engineered Italian acetate frames with polarized UV400 lenses, stainless steel 5-barrel spring hinges, and ergonomic non-slip earhooks.',
+    specs: [
+      { label: 'Lens Tech', value: 'Polarized UV400' },
+      { label: 'Frame', value: 'Handcrafted Acetate' },
+      { label: 'Hinges', value: '5-Barrel Stainless' },
+      { label: 'Weight', value: '32g Featherlight' },
+    ],
+    modelPath: '/models/sunglasses.glb',
+    scale: 16.0,
+    position: [0, -0.05, 0],
+    rotation: [-Math.PI / 2, 0, Math.PI / 6],
+    defaultCameraPosition: [2.2, 1.4, 2.4],
+    minDistance: 0.9,
+    maxDistance: 4.5,
+    parts: [
+      {
+        id: 'frames',
+        name: 'Front Frame & Rims',
+        description: 'Sculpted front acetate eyewear silhouette',
+        meshNames: ['Frames', 'frames'],
+        defaultColor: '#0f172a',
+        palette: [
+          '#0f172a', // Classic Obsidian
+          '#78350f', // Havana Tortoiseshell
+          '#e2e8f0', // Crystal Clear
+          '#fbbf24', // Champagne Gold
+          '#991b1b', // Bordeaux Amber
+          '#1e3a8a', // Midnight Indigo
+          '#15803d', // Racing Emerald
+          '#f8fafc', // Polar White
+        ],
+      },
+      {
+        id: 'lenses',
+        name: 'Polarized Lenses',
+        description: 'Multi-coat anti-reflective tinted lenses',
+        meshNames: ['Lenses', 'lenses', 'LensesInterior', 'LensesExterior'],
+        defaultColor: '#1e293b',
+        palette: [
+          '#1e293b', // Deep Smoke
+          '#0284c7', // Sapphire Blue Mirror
+          '#d97706', // Sunset Amber Gradient
+          '#7c3aed', // Purple Violet Iridescent
+          '#059669', // Emerald Green Flash
+          '#be123c', // Ruby Rose
+          '#000000', // Pitch Black 100%
+        ],
+      },
+      {
+        id: 'temples',
+        name: 'Temples & Arms',
+        description: 'Metallic side arms and precision hinge core',
+        meshNames: ['Temple', 'temple', 'TempleLeft', 'TempleRight'],
+        defaultColor: '#fbbf24',
+        palette: [
+          '#fbbf24', // Gilded Gold
+          '#e2e8f0', // Polished Chrome
+          '#0f172a', // Matte Black
+          '#94a3b8', // Brushed Gunmetal
+          '#b45309', // Vintage Bronze
+          '#dc2626', // Anodized Red
+        ],
+      },
+      {
+        id: 'earhooks',
+        name: 'Comfort Ear Hooks',
+        description: 'Silicone comfort tips for secure grip',
+        meshNames: ['Earhook', 'earhook', 'EarhookLeft', 'EarhookRight', 'Nosepads', 'nose_pads'],
+        defaultColor: '#0f172a',
+        palette: [
+          '#0f172a', // Matte Onyx
+          '#e2e8f0', // Frosted White
+          '#ef4444', // Racing Red
+          '#3b82f6', // Neon Blue
+          '#f59e0b', // Amber Orange
+        ],
+      },
+    ],
+  },
+  {
+    id: 'helmet',
+    name: 'Apex Cyber Combat Helmet',
+    category: 'Tactical & Sci-Fi Gear',
+    badge: 'Collector Edition',
+    price: '$899.00',
+    rating: 5.0,
+    reviews: 210,
+    description:
+      'Full-enclosure ballistic tactical helmet with dynamic HUD visor, reinforced ceramic composite plating, and integrated communications array.',
+    specs: [
+      { label: 'Shell Material', value: 'Carbon Kevlar Matrix' },
+      { label: 'Visor', value: 'Electrochromic HUD' },
+      { label: 'Rating', value: 'MIL-SPEC Ballistic' },
+      { label: 'Weight', value: '1.2 kg' },
+    ],
+    modelPath: '/models/helmet.glb',
+    scale: 1.35,
+    position: [0, -0.05, 0],
+    rotation: [0, Math.PI / 4, 0],
+    defaultCameraPosition: [2.5, 1.8, 2.8],
+    minDistance: 1.2,
+    maxDistance: 6.0,
+    parts: [
+      {
+        id: 'helmet_shell',
+        name: 'Armor Shell & Visor',
+        description: 'Battle-hardened composite outer armor and optics',
+        meshNames: ['damagedHelmet', 'helmet', 'node_damagedHelmet'],
+        defaultColor: '#ffffff',
+        palette: [
+          '#ffffff', // Factory Clean
+          '#0f172a', // Stealth Ops Black
+          '#ef4444', // Hazard Crimson
+          '#3b82f6', // Cyber Cobalt
+          '#10b981', // Neon Acid Green
+          '#f59e0b', // Solar Flare Amber
+          '#8b5cf6', // Deep Void Purple
+          '#e2e8f0', // Titanium Silver
+        ],
+      },
+    ],
+  },
 ];
 
 export const LIGHTING_PRESETS = [
@@ -223,4 +354,3 @@ export const LIGHTING_PRESETS = [
   { id: 'sunset', name: 'Sunset Warmth', icon: 'Sunset', environment: 'sunset', bg: '#140c10' },
   { id: 'apartment', name: 'Interior Warm', icon: 'Home', environment: 'apartment', bg: '#0f0e12' },
 ];
-
