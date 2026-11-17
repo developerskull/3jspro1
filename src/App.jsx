@@ -51,6 +51,8 @@ export default function App() {
   const [isAutoRotating, setIsAutoRotating] = useState(false);
   const [isWireframe, setIsWireframe] = useState(false);
   const [lightingPreset, setLightingPreset] = useState(LIGHTING_PRESETS[0]);
+  const [cameraAngle, setCameraAngle] = useState('perspective'); // 'perspective' | 'front' | 'side' | 'top'
+  const [isImmersiveMode, setIsImmersiveMode] = useState(false);
   const [resetTrigger, setResetTrigger] = useState(0);
 
   // Flipkart Product Panel open/closed state
@@ -181,15 +183,17 @@ export default function App() {
 
   return (
     <div className="relative w-full h-full min-h-screen bg-[#070b12] overflow-hidden select-none font-sans">
-      {/* Flipkart Top Navigation Header */}
-      <FlipkartHeader
-        activeCategory={activeCategory}
-        onSelectCategory={handleCategorySelect}
-        searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
-        cartCount={cartCount}
-        onOpenCart={() => setIsCartModalOpen(true)}
-      />
+      {/* Flipkart Top Navigation Header (hidden in immersive mode) */}
+      {!isImmersiveMode && (
+        <FlipkartHeader
+          activeCategory={activeCategory}
+          onSelectCategory={handleCategorySelect}
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
+          cartCount={cartCount}
+          onOpenCart={() => setIsCartModalOpen(true)}
+        />
+      )}
 
       {/* Dynamic studio ambient background gradient */}
       <div
@@ -213,13 +217,14 @@ export default function App() {
         isAutoRotating={isAutoRotating}
         isWireframe={isWireframe}
         lightingPreset={lightingPreset}
+        cameraAngle={cameraAngle}
         resetTrigger={resetTrigger}
         onCanvasReady={(domElement) => {
           canvasElementRef.current = domElement;
         }}
       />
 
-      {/* Controls Overlay with 3D Tools & Bottom Product Switcher */}
+      {/* Controls Overlay with 3D Tools, Studio Angles & Bottom Product Switcher */}
       <ControlsOverlay
         products={filteredProducts.length > 0 ? filteredProducts : PRODUCTS}
         activeProduct={activeProduct}
@@ -230,27 +235,33 @@ export default function App() {
         onToggleWireframe={() => setIsWireframe((prev) => !prev)}
         lightingPreset={lightingPreset}
         onSelectLightingPreset={setLightingPreset}
+        cameraAngle={cameraAngle}
+        onSelectCameraAngle={setCameraAngle}
+        isImmersiveMode={isImmersiveMode}
+        onToggleImmersiveMode={() => setIsImmersiveMode((prev) => !prev)}
         onResetView={handleResetView}
         onTakeScreenshot={handleTakeScreenshot}
         hoveredPart={hoveredPart}
         toastMessage={customToast || screenshotToast}
       />
 
-      {/* Flipkart Product Detail, Pricing & 3D Color Customizer Panel */}
-      <FlipkartProductPanel
-        product={activeProduct}
-        partColors={activePartColors}
-        onColorChange={handleColorChange}
-        onApplyColorway={handleApplyColorway}
-        selectedPartId={selectedPartId}
-        onSelectPart={setSelectedPartId}
-        onResetColors={handleResetColors}
-        onRandomizeColors={handleRandomizeColors}
-        onAddToCart={handleAddToCart}
-        onBuyNow={handleBuyNow}
-        isOpen={isPanelOpen}
-        onToggleOpen={() => setIsPanelOpen((prev) => !prev)}
-      />
+      {/* Flipkart Product Detail, Pricing & 3D Color Customizer Panel (hidden in immersive mode) */}
+      {!isImmersiveMode && (
+        <FlipkartProductPanel
+          product={activeProduct}
+          partColors={activePartColors}
+          onColorChange={handleColorChange}
+          onApplyColorway={handleApplyColorway}
+          selectedPartId={selectedPartId}
+          onSelectPart={setSelectedPartId}
+          onResetColors={handleResetColors}
+          onRandomizeColors={handleRandomizeColors}
+          onAddToCart={handleAddToCart}
+          onBuyNow={handleBuyNow}
+          isOpen={isPanelOpen}
+          onToggleOpen={() => setIsPanelOpen((prev) => !prev)}
+        />
+      )}
 
       {/* Flipkart Cart & Checkout Drawer Modal */}
       <FlipkartCartModal

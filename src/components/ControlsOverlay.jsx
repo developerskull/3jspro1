@@ -10,13 +10,24 @@ import {
   MousePointerClick,
   Check,
   Compass,
+  Maximize2,
+  Minimize2,
+  Layers,
+  Eye,
 } from 'lucide-react';
 import FlipkartProductSwitcher from './FlipkartProductSwitcher';
 import { LIGHTING_PRESETS } from '../data/products';
 
+const CAMERA_ANGLES = [
+  { id: 'perspective', label: '3/4 Angle', icon: '📐' },
+  { id: 'front', label: 'Front', icon: '👁️' },
+  { id: 'side', label: 'Side', icon: '📏' },
+  { id: 'top', label: 'Top', icon: '🔝' },
+];
+
 /**
- * Overlay around the 3D canvas with 3D viewer tools, bottom product switcher,
- * hover indicators, and toast alerts
+ * Overlay around the 3D canvas with 3D viewer tools, camera presets,
+ * bottom product switcher, hover indicators, and toast alerts
  */
 export default function ControlsOverlay({
   products,
@@ -28,6 +39,10 @@ export default function ControlsOverlay({
   onToggleWireframe,
   lightingPreset,
   onSelectLightingPreset,
+  cameraAngle,
+  onSelectCameraAngle,
+  isImmersiveMode,
+  onToggleImmersiveMode,
   onResetView,
   onTakeScreenshot,
   hoveredPart,
@@ -37,17 +52,40 @@ export default function ControlsOverlay({
 
   return (
     <>
-      {/* 360° Interactive 3D View floating pill badge */}
-      <div className="fixed top-24 left-4 z-20 pointer-events-none">
+      {/* Top Left: 360° Studio Indicator & Camera Angle Presets */}
+      <div className="fixed top-24 left-4 z-20 flex flex-col sm:flex-row items-start sm:items-center gap-2 pointer-events-none">
+        {/* 360° Live Badge */}
         <div className="glass-panel px-3.5 py-1.5 rounded-full flex items-center gap-2 border border-[#2874f0]/40 shadow-xl pointer-events-auto">
           <div className="w-2 h-2 rounded-full bg-[#ffe500] animate-ping" />
           <span className="text-[11px] font-bold text-white tracking-wide uppercase flex items-center gap-1.5">
             <Compass className="w-3.5 h-3.5 text-[#2874f0] animate-spin" style={{ animationDuration: '8s' }} />
-            <span>360° 3D View</span>
+            <span>3D Studio</span>
           </span>
-          <span className="text-[10px] text-slate-400 border-l border-white/10 pl-2 hidden sm:inline">
+          <span className="text-[10px] text-slate-400 border-l border-white/10 pl-2 hidden md:inline">
             Drag to Rotate • Scroll to Zoom
           </span>
+        </div>
+
+        {/* Camera Angle Presets Pill Bar */}
+        <div className="glass-panel p-1 rounded-full flex items-center gap-1 shadow-xl border border-white/10 pointer-events-auto">
+          {CAMERA_ANGLES.map((angle) => {
+            const isActive = cameraAngle === angle.id;
+            return (
+              <button
+                key={angle.id}
+                onClick={() => onSelectCameraAngle(angle.id)}
+                className={`px-2.5 py-1 rounded-full text-[11px] font-semibold transition-all cursor-pointer flex items-center gap-1 ${
+                  isActive
+                    ? 'bg-[#2874f0] text-white shadow-sm'
+                    : 'text-slate-400 hover:text-white hover:bg-white/5'
+                }`}
+                title={`Switch to ${angle.label} Camera`}
+              >
+                <span>{angle.icon}</span>
+                <span className="hidden sm:inline">{angle.label}</span>
+              </button>
+            );
+          })}
         </div>
       </div>
 
@@ -76,7 +114,7 @@ export default function ControlsOverlay({
         {/* Reset Camera View */}
         <button
           onClick={onResetView}
-          title="Reset 3D Camera View"
+          title="Reset 3D Camera"
           className="p-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition cursor-pointer"
         >
           <RotateCcw className="w-4 h-4" />
@@ -148,6 +186,17 @@ export default function ControlsOverlay({
           className="p-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition cursor-pointer group"
         >
           <Camera className="w-4 h-4 group-hover:scale-110 transition-transform text-[#2874f0]" />
+        </button>
+
+        {/* Immersive Fullscreen Mode */}
+        <button
+          onClick={onToggleImmersiveMode}
+          title={isImmersiveMode ? 'Exit Cinema View' : 'Cinema 3D Fullscreen View'}
+          className={`p-2.5 rounded-xl transition cursor-pointer ${
+            isImmersiveMode ? 'text-[#ffe500] bg-[#2874f0]/30' : 'text-slate-300 hover:text-white hover:bg-white/10'
+          }`}
+        >
+          {isImmersiveMode ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
         </button>
       </div>
 

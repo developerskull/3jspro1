@@ -1,29 +1,49 @@
 import React, { useRef, useEffect } from 'react';
-import { Canvas } from '@react-three/fiber';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Environment, ContactShadows } from '@react-three/drei';
 import * as THREE from 'three';
 import Model from './Model';
 import ErrorBoundary from './ErrorBoundary';
 
 /**
- * Controller to smoothly animate OrbitControls and Camera to default view
- * when resetting or switching products
+ * Controller to smoothly glide OrbitControls and Camera between preset view angles
+ * (Perspective, Front, Side, Top)
  */
-function CameraController({ defaultPosition, resetTrigger, controlsRef }) {
+function CameraController({ targetPosition, resetTrigger, controlsRef }) {
+  const isTransitioningRef = useRef(false);
+  const targetPosVec = useRef(new THREE.Vector3());
+
   useEffect(() => {
-    if (controlsRef.current) {
-      const controls = controlsRef.current;
-      controls.target.set(0, 0, 0);
-      controls.object.position.set(...defaultPosition);
-      controls.update();
+    if (targetPosition) {
+      targetPosVec.current.set(...targetPosition);
+      isTransitioningRef.current = true;
     }
-  }, [resetTrigger, defaultPosition, controlsRef]);
+  }, [targetPosition, resetTrigger]);
+
+  useFrame((state, delta) => {
+    if (!controlsRef.current || !isTransitioningRef.current) return;
+    const camera = state.camera;
+    const controls = controlsRef.current;
+
+    // Smooth lerp camera position towards target
+    const step = Math.min(1, delta * 6);
+    camera.position.lerp(targetPosVec.current, step);
+    controls.target.lerp(new THREE.Vector3(0, 0, 0), step);
+    controls.update();
+
+    // End transition when close enough
+    if (camera.position.distanceTo(targetPosVec.current) < 0.05) {
+      camera.position.copy(targetPosVec.current);
+      isTransitioningRef.current = false;
+    }
+  });
 
   return null;
 }
 
 /**
- * Main 3D WebGL Canvas Scene
+ * Main 3D WebGL Canvas Scene with studio lighting, grounded contact shadows,
+ * smooth camera transitions, and PBR environments
  */
 export default function Scene({
   product,
@@ -35,10 +55,30 @@ export default function Scene({
   isAutoRotating,
   isWireframe,
   lightingPreset,
+  cameraAngle,
   resetTrigger,
   onCanvasReady,
 }) {
   const controlsRef = useRef();
+
+  // Compute camera positions for each preset angle based on product defaults
+  const cameraTargetPosition = React.useMemo(() => {
+    const def = product.defaultCameraPosition || [2.6, 1.6, 2.8];
+    const radius = Math.hypot(def[0], def[2]);
+    const height = def[1];
+
+    switch (cameraAngle) {
+      case 'front':
+        return [0, height * 0.9, radius * 1.05];
+      case 'side':
+        return [radius * 1.1, height * 0.95, 0];
+      case 'top':
+        return [0.01, radius * 1.35, 0.01];
+      case 'perspective':
+      default:
+        return def;
+    }
+  }, [product.defaultCameraPosition, cameraAngle]);
 
   return (
     <div className="relative w-full h-full">
@@ -46,8 +86,8 @@ export default function Scene({
         shadows
         dpr={[1, 2]} // Clamp pixel ratio for optimal 60fps performance
         camera={{
-          position: product.defaultCameraPosition || [2.5, 1.8, 3.2],
-          fov: 42,
+          position: product.defaultCameraPosition || [2.6, 1.6, 2.8],
+          fov: 40,
           near: 0.1,
           far: 50,
         }}
@@ -56,46 +96,58 @@ export default function Scene({
           antialias: true,
           powerPreference: 'high-performance',
           toneMapping: THREE.ACESFilmicToneMapping,
-          toneMappingExposure: 1.1,
+          toneMappingExposure: 1.15,
         }}
         onCreated={({ gl }) => {
           if (onCanvasReady) onCanvasReady(gl.domElement);
         }}
         className="touch-none"
       >
-        {/* Realistic Studio / Outdoor Lighting */}
-        <ambientLight intensity={0.4} />
+        {/* Realistic Studio Lighting Setup */}
+        <ambientLight intensity={0.45} />
+        
+        {/* Key Light (casts sharp yet soft directional shadow) */}
         <directionalLight
-          position={[5, 8, 5]}
-          intensity={1.2}
+          position={[6, 9, 6]}
+          intensity={1.3}
           castShadow
-          shadow-mapSize-width={1024}
-          shadow-mapSize-height={1024}
+          shadow-mapSize-width={2048}
+          shadow-mapSize-height={2048}
           shadow-bias={-0.0001}
+          shadow-camera-near={1}
+          shadow-camera-far={20}
         />
-        <directionalLight position={[-5, 5, -5]} intensity={0.3} color="#93c5fd" />
-        <pointLight position={[0, -2, 2]} intensity={0.2} color="#f8fafc" />
+
+        {/* Rim Light / Back Light for crisp edge definition */}
+        <directionalLight position={[-6, 6, -6]} intensity={0.45} color="#93c5fd" />
+        <directionalLight position={[0, -3, 3]} intensity={0.2} color="#ffffff" />
+        <pointLight position={[3, 1, -3]} intensity={0.25} color="#fbbf24" />
 
         {/* HDRI Environment Reflections */}
-        <Environment preset={lightingPreset.environment || 'studio'} background={false} environmentIntensity={0.8} />
+        <Environment
+          preset={lightingPreset.environment || 'studio'}
+          background={false}
+          environmentIntensity={0.85}
+        />
 
-        {/* Orbit Controls */}
+        {/* Constrained Orbit Controls with smooth damping */}
         <OrbitControls
           ref={controlsRef}
           makeDefault
-          enablePan={false} // Disable panning as requested
+          enablePan={false}
           enableZoom={true}
-          minDistance={product.minDistance || 1.2}
+          minDistance={product.minDistance || 1.0}
           maxDistance={product.maxDistance || 7.0}
           enableDamping={true}
           dampingFactor={0.06}
           autoRotate={isAutoRotating}
-          autoRotateSpeed={1.4}
-          maxPolarAngle={Math.PI / 2 + 0.05} // Prevent camera from dipping too far below floor
+          autoRotateSpeed={1.2}
+          maxPolarAngle={Math.PI / 2 + 0.04}
         />
 
+        {/* Smooth Camera Glide Controller */}
         <CameraController
-          defaultPosition={product.defaultCameraPosition}
+          targetPosition={cameraTargetPosition}
           resetTrigger={resetTrigger}
           controlsRef={controlsRef}
         />
@@ -114,18 +166,17 @@ export default function Scene({
           />
         </ErrorBoundary>
 
-        {/* Soft Contact Shadows grounded under the product */}
+        {/* Soft Grounded Contact Shadows */}
         <ContactShadows
           position={[0, -0.01, 0]}
-          opacity={0.65}
-          scale={10}
-          blur={2.4}
-          far={3.5}
-          resolution={512}
+          opacity={0.7}
+          scale={11}
+          blur={2.5}
+          far={3.8}
+          resolution={1024}
           color="#000000"
         />
       </Canvas>
     </div>
   );
 }
-
