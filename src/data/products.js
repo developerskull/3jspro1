@@ -1,7 +1,7 @@
 /**
  * Flipkart 3D Studio - Product Catalog Configuration
  * Detailed e-commerce metadata with Indian Rupee (₹) pricing, Flipkart Assured badges,
- * bank offers, delivery estimates, specs, and customizable 3D parts.
+ * bank offers, delivery estimates, specs, customizable 3D parts, and signature curated colorways.
  */
 
 export const FLIPKART_CATEGORIES = [
@@ -56,6 +56,50 @@ export const PRODUCTS = [
     defaultCameraPosition: [2.6, 1.6, 2.8],
     minDistance: 1.2,
     maxDistance: 6.5,
+    colorways: [
+      {
+        id: 'flipkart_edition',
+        name: 'Flipkart Signature',
+        description: 'Iconic Flipkart Royal Blue with Electric Yellow volt accents',
+        colors: { shoe_body: '#2874f0' },
+        preview: ['#2874f0', '#ffe500'],
+      },
+      {
+        id: 'cyberpunk_volt',
+        name: 'Cyberpunk Volt',
+        description: 'Electrifying neon acid green and stealth contrast',
+        colors: { shoe_body: '#00ff88' },
+        preview: ['#00ff88', '#0f172a'],
+      },
+      {
+        id: 'tiffany_aqua',
+        name: 'Tiffany Glacier',
+        description: 'Luxurious Tiffany mint aqua with cloud white contrast',
+        colors: { shoe_body: '#06b6d4' },
+        preview: ['#06b6d4', '#f8fafc'],
+      },
+      {
+        id: 'bred_chicago',
+        name: 'Bred Chicago',
+        description: 'Timeless basketball bred combo with bold crimson red',
+        colors: { shoe_body: '#dc2626' },
+        preview: ['#dc2626', '#09090b'],
+      },
+      {
+        id: 'triple_white',
+        name: 'Triple Clean White',
+        description: 'Minimalist pristine aesthetic with subtle pearlescent sheen',
+        colors: { shoe_body: '#ffffff' },
+        preview: ['#ffffff', '#e2e8f0'],
+      },
+      {
+        id: 'midnight_stealth',
+        name: 'Midnight Stealth',
+        description: 'All-black murdered-out tactical obsidian finish',
+        colors: { shoe_body: '#09090b' },
+        preview: ['#09090b', '#27272a'],
+      },
+    ],
     parts: [
       {
         id: 'shoe_body',
@@ -66,12 +110,16 @@ export const PRODUCTS = [
         palette: [
           '#f1f5f9', // Cloud White
           '#0f172a', // Midnight Black
-          '#2874f0', // Flipkart Blue
-          '#ef4444', // Crimson Pulse
-          '#10b981', // Sport Mint
-          '#ffe500', // Electric Volt
+          '#2874f0', // Flipkart Royal Blue
+          '#00ff88', // Cyber Neon Volt
+          '#06b6d4', // Tiffany Aqua
+          '#dc2626', // Chicago Crimson
+          '#ffe500', // Electric Yellow
           '#8b5cf6', // Cyber Lavender
-          '#ea580c', // Sunset Neon
+          '#ea580c', // Sunset Neon Tangerine
+          '#ec4899', // Hot Pink
+          '#10b981', // Sport Emerald
+          '#d97706', // Desert Wheat
         ],
       },
     ],
@@ -118,6 +166,50 @@ export const PRODUCTS = [
     defaultCameraPosition: [2.8, 1.9, 3.2],
     minDistance: 1.5,
     maxDistance: 7.0,
+    colorways: [
+      {
+        id: 'royal_emerald',
+        name: 'Royal Emerald & Brass',
+        description: 'Deep forest green velvet with dark walnut legs and brushed brass',
+        colors: { fabric: '#064e3b', wood: '#3b2210', metal: '#fbbf24' },
+        preview: ['#064e3b', '#3b2210', '#fbbf24'],
+      },
+      {
+        id: 'bordeaux_luxury',
+        name: 'Bordeaux Velvet & Rose Gold',
+        description: 'Rich wine red velvet with ebonized legs and rose gold joinery',
+        colors: { fabric: '#7f1d1d', wood: '#1c1917', metal: '#f43f5e' },
+        preview: ['#7f1d1d', '#1c1917', '#f43f5e'],
+      },
+      {
+        id: 'flipkart_royal',
+        name: 'Flipkart Royal Blue',
+        description: 'Signature Flipkart deep royal blue with warm walnut and gold',
+        colors: { fabric: '#2874f0', wood: '#78350f', metal: '#fbbf24' },
+        preview: ['#2874f0', '#78350f', '#fbbf24'],
+      },
+      {
+        id: 'scandi_terracotta',
+        name: 'Nordic Terracotta & Oak',
+        description: 'Warm terracotta velvet with natural blonde oak and chrome',
+        colors: { fabric: '#c2410c', wood: '#d97706', metal: '#cbd5e1' },
+        preview: ['#c2410c', '#d97706', '#cbd5e1'],
+      },
+      {
+        id: 'coastal_teal',
+        name: 'Coastal Teal & Beech',
+        description: 'Lush oceanic teal with Scandinavian bleached beech legs',
+        colors: { fabric: '#0f766e', wood: '#fed7aa', metal: '#cbd5e1' },
+        preview: ['#0f766e', '#fed7aa', '#cbd5e1'],
+      },
+      {
+        id: 'midnight_charcoal',
+        name: 'Midnight Charcoal Ops',
+        description: 'Matte charcoal slate velvet with black ash legs and gunmetal',
+        colors: { fabric: '#1e293b', wood: '#0f172a', metal: '#64748b' },
+        preview: ['#1e293b', '#0f172a', '#64748b'],
+      },
+    ],
     parts: [
       {
         id: 'fabric',
@@ -128,12 +220,14 @@ export const PRODUCTS = [
         palette: [
           '#f59e0b', // Royal Mustard
           '#2874f0', // Flipkart Royal Blue
-          '#0d9488', // Nordic Teal
-          '#e11d48', // Ruby Carmine
-          '#334155', // Charcoal Slate
+          '#064e3b', // Royal Emerald
+          '#7f1d1d', // Bordeaux Wine
+          '#0f766e', // Coastal Teal
+          '#c2410c', // Terracotta Rust
           '#1e1b4b', // Midnight Navy
-          '#4d7c0f', // Forest Olive
-          '#f8fafc', // Pearl White
+          '#334155', // Charcoal Slate
+          '#f8fafc', // Oyster Pearl
+          '#9333ea', // Royal Amethyst
         ],
       },
       {
@@ -148,6 +242,7 @@ export const PRODUCTS = [
           '#1c1917', // Ebonized Charcoal
           '#d97706', // Natural Oak
           '#fed7aa', // Honey Pine
+          '#0f172a', // Midnight Ash
         ],
       },
       {
@@ -157,8 +252,9 @@ export const PRODUCTS = [
         meshNames: ['SheenChair_metal'],
         defaultColor: '#cbd5e1',
         palette: [
-          '#cbd5e1', // Polished Chrome
           '#fbbf24', // Champagne Gold
+          '#f43f5e', // Rose Gold
+          '#cbd5e1', // Polished Chrome
           '#0f172a', // Matte Black
           '#94a3b8', // Gunmetal Grey
           '#b45309', // Antique Brass
@@ -208,6 +304,50 @@ export const PRODUCTS = [
     defaultCameraPosition: [2.2, 1.6, 2.6],
     minDistance: 1.0,
     maxDistance: 5.5,
+    colorways: [
+      {
+        id: 'ferrari_corsa',
+        name: 'Scuderia Corsa Racing',
+        description: 'Scarlet red strap, titanium bezel, obsidian dial, and yellow racing hands',
+        colors: { strap: '#dc2626', bezel: '#475569', dial: '#0f172a', buttons: '#e2e8f0', hands: '#ffe500' },
+        preview: ['#dc2626', '#475569', '#0f172a', '#ffe500'],
+      },
+      {
+        id: 'hulk_emerald',
+        name: 'Rolex "Hulk" Emerald',
+        description: 'British forest green dial and strap with 18K yellow gold bezel',
+        colors: { strap: '#064e3b', bezel: '#fbbf24', dial: '#022c22', buttons: '#fbbf24', hands: '#fbbf24' },
+        preview: ['#064e3b', '#fbbf24', '#022c22', '#fbbf24'],
+      },
+      {
+        id: 'seamaster_blue',
+        name: 'Omega Seamaster Maritime',
+        description: 'Deep maritime navy dial with stainless bezel and high-viz orange hands',
+        colors: { strap: '#1e3a8a', bezel: '#e2e8f0', dial: '#0f244a', buttons: '#e2e8f0', hands: '#ea580c' },
+        preview: ['#1e3a8a', '#e2e8f0', '#0f244a', '#ea580c'],
+      },
+      {
+        id: 'stealth_phantom',
+        name: 'Blackout Phantom Ops',
+        description: 'Complete blackout DLC finish with crimson red chronograph hands',
+        colors: { strap: '#09090b', bezel: '#18181b', dial: '#09090b', buttons: '#27272a', hands: '#ef4444' },
+        preview: ['#09090b', '#18181b', '#ef4444'],
+      },
+      {
+        id: 'flipkart_chronos',
+        name: 'Flipkart Velocity Edition',
+        description: 'Flipkart royal blue strap with polished silver case and electric yellow hands',
+        colors: { strap: '#2874f0', bezel: '#e2e8f0', dial: '#0f172a', buttons: '#2874f0', hands: '#ffe500' },
+        preview: ['#2874f0', '#e2e8f0', '#0f172a', '#ffe500'],
+      },
+      {
+        id: 'rose_gold_luxe',
+        name: 'Rose Gold Royal Master',
+        description: 'Gleaming rose gold bezel with sunburst silver dial and chocolate strap',
+        colors: { strap: '#451a03', bezel: '#f43f5e', dial: '#f8fafc', buttons: '#f43f5e', hands: '#f43f5e' },
+        preview: ['#451a03', '#f43f5e', '#f8fafc'],
+      },
+    ],
     parts: [
       {
         id: 'strap',
@@ -217,12 +357,14 @@ export const PRODUCTS = [
         defaultColor: '#1e293b',
         palette: [
           '#1e293b', // Stealth Onyx
-          '#2874f0', // Flipkart Blue
-          '#991b1b', // Racing Maroon
-          '#1e40af', // Deep Ocean
-          '#065f46', // British Green
-          '#d97706', // Cognac Leather
+          '#2874f0', // Flipkart Royal Blue
+          '#dc2626', // Ferrari Corsa Red
+          '#064e3b', // British Racing Green
+          '#1e3a8a', // Deep Ocean Navy
+          '#451a03', // Chocolate Leather
+          '#d97706', // Saddle Cognac
           '#f8fafc', // Arctic White
+          '#ea580c', // High-Viz Tangerine
         ],
       },
       {
@@ -237,6 +379,7 @@ export const PRODUCTS = [
           '#f43f5e', // Rose Gold
           '#0f172a', // DLC Matte Black
           '#64748b', // Space Titanium
+          '#2874f0', // Anodized Blue
         ],
       },
       {
@@ -247,10 +390,11 @@ export const PRODUCTS = [
         defaultColor: '#0f172a',
         palette: [
           '#0f172a', // Obsidian Black
-          '#1e3a8a', // Midnight Blue
-          '#14532d', // Emerald Forest
+          '#0f244a', // Maritime Blue
+          '#022c22', // Deep Forest Green
           '#7f1d1d', // Burgundy
           '#f8fafc', // Sunburst Silver
+          '#ffe500', // Speed Yellow
         ],
       },
       {
@@ -262,6 +406,8 @@ export const PRODUCTS = [
         palette: [
           '#e2e8f0', // Steel Chrome
           '#fbbf24', // Gilded Gold
+          '#f43f5e', // Rose Gold
+          '#2874f0', // Flipkart Blue
           '#ef4444', // Anodized Red
           '#10b981', // Neon Green
           '#0f172a', // Midnight
@@ -274,11 +420,14 @@ export const PRODUCTS = [
         meshNames: ['Hand Hours', 'Hand Minutes', 'Hand Seconds', 'Hand Setting'],
         defaultColor: '#ef4444',
         palette: [
+          '#ffe500', // Electric Speed Yellow
           '#ef4444', // High-Viz Red
+          '#ea580c', // Bright Orange
           '#fbbf24', // Golden Arrow
           '#38bdf8', // Cyan Luminescent
           '#f8fafc', // Pure White
           '#22c55e', // Toxic Lime
+          '#f43f5e', // Rose Gold
         ],
       },
     ],
@@ -325,6 +474,43 @@ export const PRODUCTS = [
     defaultCameraPosition: [2.2, 1.4, 2.4],
     minDistance: 0.9,
     maxDistance: 4.5,
+    colorways: [
+      {
+        id: 'miami_sunset',
+        name: 'Miami Vice Sunset',
+        description: 'Havana tortoiseshell acetate with sunset amber lenses & warm gold temples',
+        colors: { frames: '#78350f', lenses: '#ea580c', temples: '#fbbf24', earhooks: '#0f172a' },
+        preview: ['#78350f', '#ea580c', '#fbbf24'],
+      },
+      {
+        id: 'glacier_ice',
+        name: 'Glacier Polar Ice',
+        description: 'Crystal frost clear frames with polarized sapphire mirror lenses & chrome',
+        colors: { frames: '#e2e8f0', lenses: '#0284c7', temples: '#cbd5e1', earhooks: '#0284c7' },
+        preview: ['#e2e8f0', '#0284c7', '#cbd5e1'],
+      },
+      {
+        id: 'matrix_noir',
+        name: 'Hollywood Noir',
+        description: 'Piano gloss black frames with 100% pitch black polarized lenses & gunmetal',
+        colors: { frames: '#0a0a0a', lenses: '#000000', temples: '#27272a', earhooks: '#000000' },
+        preview: ['#0a0a0a', '#000000', '#27272a'],
+      },
+      {
+        id: 'cyber_vapor',
+        name: 'Cyberpunk Neon Orchid',
+        description: 'Deep violet acetate frames with iridescent violet lenses & cyan temples',
+        colors: { frames: '#581c87', lenses: '#a855f7', temples: '#06b6d4', earhooks: '#a855f7' },
+        preview: ['#581c87', '#a855f7', '#06b6d4'],
+      },
+      {
+        id: 'flipkart_edition',
+        name: 'Flipkart Signature Wave',
+        description: 'Flipkart royal blue frames with yellow flash lenses and gold temples',
+        colors: { frames: '#2874f0', lenses: '#ffe500', temples: '#fbbf24', earhooks: '#2874f0' },
+        preview: ['#2874f0', '#ffe500', '#fbbf24'],
+      },
+    ],
     parts: [
       {
         id: 'frames',
@@ -337,6 +523,7 @@ export const PRODUCTS = [
           '#78350f', // Havana Tortoiseshell
           '#2874f0', // Flipkart Royal Blue
           '#e2e8f0', // Crystal Clear
+          '#581c87', // Deep Violet
           '#fbbf24', // Honey Amber
           '#991b1b', // Wine Red
           '#1e3a8a', // Dark Navy
@@ -352,8 +539,9 @@ export const PRODUCTS = [
         palette: [
           '#1e293b', // Smoke Grey 100%
           '#0284c7', // Sapphire Blue Mirror
-          '#d97706', // Sunset Amber
-          '#7c3aed', // Purple Haze
+          '#ea580c', // Sunset Amber
+          '#ffe500', // Flash Yellow Mirror
+          '#a855f7', // Purple Haze
           '#059669', // Emerald Flash
           '#be123c', // Sunset Ruby
           '#000000', // Pitch Black Polarized
@@ -368,6 +556,7 @@ export const PRODUCTS = [
         palette: [
           '#fbbf24', // Warm Gold
           '#e2e8f0', // Silver Chrome
+          '#06b6d4', // Electric Cyan
           '#0f172a', // Matte Black
           '#94a3b8', // Gunmetal
           '#b45309', // Vintage Bronze
@@ -385,6 +574,8 @@ export const PRODUCTS = [
           '#e2e8f0', // Frosted White
           '#ef4444', // Sport Red
           '#2874f0', // Blue
+          '#a855f7', // Violet
+          '#0284c7', // Aqua
           '#f59e0b', // Amber
         ],
       },
@@ -432,6 +623,43 @@ export const PRODUCTS = [
     defaultCameraPosition: [2.5, 1.8, 2.8],
     minDistance: 1.2,
     maxDistance: 6.0,
+    colorways: [
+      {
+        id: 'cyberpunk_2077',
+        name: 'Night City Cyberpunk',
+        description: 'Hazard electric yellow composite with battle scoring',
+        colors: { helmet_shell: '#eab308' },
+        preview: ['#eab308', '#06b6d4'],
+      },
+      {
+        id: 'doom_crimson',
+        name: 'Doom Crimson Slayer',
+        description: 'Blood red military ballistic coating with blackened carbon wear',
+        colors: { helmet_shell: '#991b1b' },
+        preview: ['#991b1b', '#0f172a'],
+      },
+      {
+        id: 'arctic_ghost',
+        name: 'Ghost Recon Arctic',
+        description: 'Pure snow camouflage with titanium alloy sheen',
+        colors: { helmet_shell: '#f8fafc' },
+        preview: ['#f8fafc', '#38bdf8'],
+      },
+      {
+        id: 'flipkart_mecha',
+        name: 'Flipkart Mecha Titan',
+        description: 'Official Flipkart royal blue armor plating with yellow HUD glow',
+        colors: { helmet_shell: '#2874f0' },
+        preview: ['#2874f0', '#ffe500'],
+      },
+      {
+        id: 'obsidian_shadow',
+        name: 'Shadow Blackout Ops',
+        description: 'Radar-absorbent stealth carbon obsidian shell',
+        colors: { helmet_shell: '#0a0a0a' },
+        preview: ['#0a0a0a', '#27272a'],
+      },
+    ],
     parts: [
       {
         id: 'helmet_shell',
@@ -441,12 +669,14 @@ export const PRODUCTS = [
         defaultColor: '#ffffff',
         palette: [
           '#ffffff', // Arctic Factory
-          '#0f172a', // Tactical Black Ops
+          '#0a0a0a', // Tactical Black Ops
           '#2874f0', // Cyber Flipkart Blue
-          '#ef4444', // Hazard Red
-          '#10b981', // Toxic Acid
-          '#ffe500', // Warning Yellow
+          '#eab308', // Cyberpunk Yellow
+          '#991b1b', // Hazard Crimson
+          '#06b6d4', // Neon Cyan
+          '#10b981', // Toxic Acid Green
           '#8b5cf6', // Quantum Violet
+          '#ea580c', // Molten Orange
           '#e2e8f0', // Titanium Silver
         ],
       },

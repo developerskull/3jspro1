@@ -92,6 +92,20 @@ export default function App() {
     [activeProduct.id]
   );
 
+  // Apply complete curated signature colorway
+  const handleApplyColorway = useCallback(
+    (colorsMap) => {
+      setColorsState((prev) => ({
+        ...prev,
+        [activeProduct.id]: {
+          ...prev[activeProduct.id],
+          ...colorsMap,
+        },
+      }));
+    },
+    [activeProduct.id]
+  );
+
   // Reset all parts of current product to default colors
   const handleResetColors = useCallback(() => {
     setColorsState((prev) => {
@@ -227,6 +241,7 @@ export default function App() {
         product={activeProduct}
         partColors={activePartColors}
         onColorChange={handleColorChange}
+        onApplyColorway={handleApplyColorway}
         selectedPartId={selectedPartId}
         onSelectPart={setSelectedPartId}
         onResetColors={handleResetColors}

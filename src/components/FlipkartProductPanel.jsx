@@ -26,6 +26,7 @@ export default function FlipkartProductPanel({
   product,
   partColors,
   onColorChange,
+  onApplyColorway,
   selectedPartId,
   onSelectPart,
   onResetColors,
@@ -195,6 +196,52 @@ export default function FlipkartProductPanel({
           {/* TAB 1: 3D REAL-TIME COLOR CUSTOMIZER */}
           {activeTab === 'customize' && (
             <div className="space-y-4 animate-fade-in">
+              {/* SIGNATURE 3D COLORWAYS / THEMES */}
+              {product.colorways && product.colorways.length > 0 && (
+                <div className="space-y-2 pb-1 border-b border-white/5">
+                  <div className="flex items-center justify-between">
+                    <span className="font-semibold text-white flex items-center gap-1.5 text-xs">
+                      <Sparkles className="w-3.5 h-3.5 text-[#ffe500]" />
+                      Signature Colorways ({product.colorways.length})
+                    </span>
+                    <span className="text-[10px] text-slate-400">1-Click Full Theme</span>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2">
+                    {product.colorways.map((cw) => {
+                      return (
+                        <button
+                          key={cw.id}
+                          onClick={() => onApplyColorway && onApplyColorway(cw.colors)}
+                          title={cw.description}
+                          className="flex items-center gap-2 p-2 rounded-xl bg-slate-900/80 border border-white/10 hover:border-[#ffe500] hover:bg-[#2874f0]/15 transition-all text-left cursor-pointer group"
+                        >
+                          {/* Multi-Color Preview Dots */}
+                          <div className="flex items-center -space-x-1 shrink-0">
+                            {cw.preview.map((color, i) => (
+                              <span
+                                key={i}
+                                className="w-3.5 h-3.5 rounded-full border border-white/40 shadow-sm"
+                                style={{ backgroundColor: color }}
+                              />
+                            ))}
+                          </div>
+
+                          <div className="flex flex-col min-w-0">
+                            <span className="font-bold text-[11px] text-white truncate group-hover:text-[#ffe500]">
+                              {cw.name}
+                            </span>
+                            <span className="text-[9px] text-slate-400 truncate">
+                              {cw.description}
+                            </span>
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
               {/* Part Selector */}
               {parts.length > 1 && (
                 <div>
