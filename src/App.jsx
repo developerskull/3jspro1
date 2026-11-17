@@ -1,12 +1,31 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useMemo } from 'react';
 import Scene from './components/Scene';
-import ColorPanel from './components/ColorPanel';
+import FlipkartHeader from './components/FlipkartHeader';
+import FlipkartProductPanel from './components/FlipkartProductPanel';
+import FlipkartCartModal from './components/FlipkartCartModal';
 import ControlsOverlay from './components/ControlsOverlay';
 import Loader from './components/Loader';
 import { PRODUCTS, LIGHTING_PRESETS } from './data/products';
 import { useScreenshot } from './hooks/useScreenshot';
 
 export default function App() {
+  // Category filter and search query
+  const [activeCategory, setActiveCategory] = useState('all');
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Filtered products list based on category & search
+  const filteredProducts = useMemo(() => {
+    return PRODUCTS.filter((p) => {
+      const matchesCategory = activeCategory === 'all' || p.category === activeCategory;
+      const matchesSearch =
+        !searchQuery.trim() ||
+        p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p.brand.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p.categoryLabel.toLowerCase().includes(searchQuery.toLowerCase());
+      return matchesCategory && matchesSearch;
+    });
+  }, [activeCategory, searchQuery]);
+
   // Current active product
   const [activeProduct, setActiveProduct] = useState(PRODUCTS[0]);
 
@@ -34,12 +53,17 @@ export default function App() {
   const [lightingPreset, setLightingPreset] = useState(LIGHTING_PRESETS[0]);
   const [resetTrigger, setResetTrigger] = useState(0);
 
-  // Color customization side panel visibility
+  // Flipkart Product Panel open/closed state
   const [isPanelOpen, setIsPanelOpen] = useState(true);
+
+  // Flipkart Cart state
+  const [cartCount, setCartCount] = useState(0);
+  const [isCartModalOpen, setIsCartModalOpen] = useState(false);
+  const [customToast, setCustomToast] = useState(null);
 
   // Canvas element reference for screenshot capture
   const canvasElementRef = useRef(null);
-  const { capture, toastMessage } = useScreenshot();
+  const { capture, toastMessage: screenshotToast } = useScreenshot();
 
   // Current active product's customized colors
   const activePartColors = colorsState[activeProduct.id] || {};
@@ -50,7 +74,7 @@ export default function App() {
     if (product.parts && product.parts.length > 0) {
       setSelectedPartId(product.parts[0].id);
     }
-    // Auto-open panel if collapsed
+    // Auto-open panel on product switch
     setIsPanelOpen(true);
   }, []);
 
@@ -68,7 +92,7 @@ export default function App() {
     [activeProduct.id]
   );
 
-  // Reset all parts of the current product to default colors
+  // Reset all parts of current product to default colors
   const handleResetColors = useCallback(() => {
     setColorsState((prev) => {
       const resetProdColors = {};
@@ -105,22 +129,64 @@ export default function App() {
   // Trigger high-res screenshot
   const handleTakeScreenshot = useCallback(() => {
     if (canvasElementRef.current) {
-      capture(canvasElementRef.current, activeProduct.name);
+      capture(canvasElementRef.current, `flipkart-3d-${activeProduct.brand}-${activeProduct.name}`);
     }
-  }, [capture, activeProduct.name]);
+  }, [capture, activeProduct]);
+
+  // Add to Cart handler
+  const handleAddToCart = useCallback((product) => {
+    setCartCount((prev) => prev + 1);
+    setCustomToast(`Added 1 item to Flipkart Cart: ${product.name}`);
+    setTimeout(() => setCustomToast(null), 3500);
+  }, []);
+
+  // Buy Now handler
+  const handleBuyNow = useCallback((product) => {
+    setCartCount((prev) => (prev === 0 ? 1 : prev));
+    setIsCartModalOpen(true);
+  }, []);
+
+  // Place Order handler
+  const handlePlaceOrder = useCallback(() => {
+    setIsCartModalOpen(false);
+    setCustomToast('🎉 Order placed successfully with Flipkart 3D Assured delivery!');
+    setCartCount(0);
+    setTimeout(() => setCustomToast(null), 4500);
+  }, []);
+
+  // Filter category selection
+  const handleCategorySelect = useCallback((catId) => {
+    setActiveCategory(catId);
+    if (catId !== 'all') {
+      const firstInCat = PRODUCTS.find((p) => p.category === catId);
+      if (firstInCat) {
+        handleSelectProduct(firstInCat);
+      }
+    }
+  }, [handleSelectProduct]);
 
   return (
-    <div className="relative w-full h-full min-h-screen bg-[#090a0f] overflow-hidden select-none">
+    <div className="relative w-full h-full min-h-screen bg-[#070b12] overflow-hidden select-none font-sans">
+      {/* Flipkart Top Navigation Header */}
+      <FlipkartHeader
+        activeCategory={activeCategory}
+        onSelectCategory={handleCategorySelect}
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        cartCount={cartCount}
+        onOpenCart={() => setIsCartModalOpen(true)}
+      />
+
       {/* Dynamic studio ambient background gradient */}
       <div
         className="absolute inset-0 pointer-events-none transition-colors duration-1000"
         style={{
-          background: `radial-gradient(circle at 50% 40%, ${lightingPreset.bg || '#131522'} 0%, #08090d 100%)`,
+          background: `radial-gradient(circle at 45% 45%, ${lightingPreset.bg || '#0c1424'} 0%, #05080e 100%)`,
         }}
       />
 
-      {/* Subtle background studio floor grid */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] pointer-events-none" />
+      {/* Subtle background studio grid */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(40,116,240,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(40,116,240,0.03)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_45%_50%,#000_70%,transparent_100%)] pointer-events-none" />
 
       {/* 3D WebGL Canvas Scene */}
       <Scene
@@ -139,9 +205,9 @@ export default function App() {
         }}
       />
 
-      {/* UI Overlays */}
+      {/* Controls Overlay with 3D Tools & Bottom Product Switcher */}
       <ControlsOverlay
-        products={PRODUCTS}
+        products={filteredProducts.length > 0 ? filteredProducts : PRODUCTS}
         activeProduct={activeProduct}
         onSelectProduct={handleSelectProduct}
         isAutoRotating={isAutoRotating}
@@ -153,11 +219,11 @@ export default function App() {
         onResetView={handleResetView}
         onTakeScreenshot={handleTakeScreenshot}
         hoveredPart={hoveredPart}
-        toastMessage={toastMessage}
+        toastMessage={customToast || screenshotToast}
       />
 
-      {/* Floating Color Customization Panel */}
-      <ColorPanel
+      {/* Flipkart Product Detail, Pricing & 3D Color Customizer Panel */}
+      <FlipkartProductPanel
         product={activeProduct}
         partColors={activePartColors}
         onColorChange={handleColorChange}
@@ -165,8 +231,19 @@ export default function App() {
         onSelectPart={setSelectedPartId}
         onResetColors={handleResetColors}
         onRandomizeColors={handleRandomizeColors}
+        onAddToCart={handleAddToCart}
+        onBuyNow={handleBuyNow}
         isOpen={isPanelOpen}
         onToggleOpen={() => setIsPanelOpen((prev) => !prev)}
+      />
+
+      {/* Flipkart Cart & Checkout Drawer Modal */}
+      <FlipkartCartModal
+        isOpen={isCartModalOpen}
+        onClose={() => setIsCartModalOpen(false)}
+        product={activeProduct}
+        partColors={activePartColors}
+        onPlaceOrder={handlePlaceOrder}
       />
 
       {/* Drei useProgress Fullscreen Loading Experience */}

@@ -1,45 +1,59 @@
-# 🌟 3D Interactive Product Studio
+# 🛍️ Flipkart 3D Studio - Interactive 3D Product Experience
 
-A portfolio-quality, modern interactive 3D product configurator and viewer built with **React**, **Three.js**, **React Three Fiber (R3F)**, **Drei**, and **Tailwind CSS**.
+An authentic, portfolio-quality **Flipkart 3D E-Commerce Product Studio & Configurator** built with **React**, **Three.js**, **React Three Fiber (R3F)**, **Drei**, and **Tailwind CSS**.
 
-Featuring dynamic 3D model switching, 60fps color transition (lerping), interactive multi-part selection on mouse click/hover, realistic PBR lighting environments, contact shadows, auto-turntable mode, wireframe inspection, and instant high-resolution PNG screenshot exports.
+Featuring Flipkart's iconic branding, real-time 3D model inspection, 60fps color transition (lerp), interactive multi-part selection on click/hover, Indian Rupee (₹) pricing, Flipkart Assured badges, live bank offers, pin-code delivery check, and an interactive **Add to Cart** & **Buy Now** checkout flow.
 
 ---
 
 ## 📸 Screenshots & Showcase
 
 <!-- SCREENSHOTS PLACEHOLDER -->
-| 👟 Shoe Customizer | 🪑 Lounge Chair | ⌚ Chronograph Timepiece |
-| :---: | :---: | :---: |
-| ![Shoe Viewer](https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format&fit=crop&q=80) | ![Chair Viewer](https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=600&auto=format&fit=crop&q=80) | ![Watch Viewer](https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&auto=format&fit=crop&q=80) |
-
-> *Tip: Replace the placeholder images above with your own captured screenshots using the in-app **Take Screenshot (📸)** button!*
+| 👟 Nike Running Shoes | 🪑 Velvet Lounge Chair | ⌚ Chronograph Watch | 🕶️ Polarized Sunglasses | 🛡️ Cyber Combat Helmet |
+| :---: | :---: | :---: | :---: | :---: |
+| ![Shoe Viewer](https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&auto=format&fit=crop&q=80) | ![Chair Viewer](https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=400&auto=format&fit=crop&q=80) | ![Watch Viewer](https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&auto=format&fit=crop&q=80) | ![Sunglasses](https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=400&auto=format&fit=crop&q=80) | ![Helmet](https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=400&auto=format&fit=crop&q=80) |
 
 ---
 
-## ✨ Features
+## 🛍️ Flipkart E-Commerce Features
 
-### 1. 3D WebGL Viewer
-- **GLTF/GLB Streaming**: High-fidelity 3D model loading via `@react-three/drei`'s `useGLTF`.
-- **Preloading**: Models are preloaded upfront using `useGLTF.preload` for instantaneous switching without lag.
-- **Constrained OrbitControls**: Smooth damping, zoom limits (`minDistance` / `maxDistance`), rotation limits, and panning disabled for a focused product showcase.
-- **Auto-Rotate (Turntable)**: Toggle continuous slow presentation rotation.
-- **Realistic PBR Lighting**:
-  - Soft grounded contact shadows via `ContactShadows`.
-  - Dynamic HDRI Environment map presets (*Studio*, *Urban City*, *Sunset Warmth*, *Interior Warm*).
-  - Multi-directional key, rim, and fill lighting.
-- **Wireframe Topology View**: Inspect 3D polygon meshes and geometry with one click.
-- **Reset Camera**: Instantly animate camera and focal target back to default framing.
+### 1. Flipkart Brand Header & Navigation
+- **Flipkart Logo & Plus Zone**: Iconic Flipkart branding with *Explore Plus ✦* and **3D** studio badge.
+- **Search Bar**: Real-time product search by name, brand, or category.
+- **Category Ribbon**: Instant filtering across *All 3D Products*, *Footwear*, *Home & Furniture*, *Watches*, *Eyewear*, and *Tech & Gaming*.
+- **Interactive Cart**: Live badge count that updates on adding items, opening an authentic Flipkart checkout modal.
 
-### 2. Product Switcher
-- **5 Curated Products**:
-  1. **Aerostride Pro Runner**: Athletic sneaker with customizable upper mesh body.
-  2. **Nordic Sheen Lounge Chair**: Scandinavian accent chair with customizable velvet fabric, solid hardwood legs, and brass hardware.
-  3. **Acro Chronograph Watch**: Luxury timepiece with customizable carbon strap, bezel ring, dial face, pushers, and hands.
-  4. **Spectra Avant Sunglasses**: Designer sunglasses with customizable acetate frames, polarized lenses, metal temples, and earhook tips.
-  5. **Apex Cyber Combat Helmet**: Ballistic sci-fi tactical helmet with customizable armor shell finish.
-- **Smooth Switch Transitions**: Animated entrance scaling and camera recalibration when alternating between items.
-- **Centralized Data Config**: Configured cleanly in [`src/data/products.js`](src/data/products.js) with specs, pricing, camera limits, and material palettes.
+### 2. Flipkart Product Detail Panel
+- **Indian Rupee (₹) Pricing**: Special discounted price, strikethrough original MRP, and discount percentage tags (e.g. `₹2,499` ~~₹5,999~~ `58% off`).
+- **Flipkart Assured Badge**: The official `fAssured ✦` trust mark.
+- **Ratings & Reviews**: Green star rating pill (`4.4 ★`) with review counts.
+- **Bank & Special Offers**: Collapsible bank discounts (Flipkart Axis Bank 5% cashback, HDFC/SBI card discounts, No Cost EMI).
+- **Delivery & PIN Code Checker**: Live checker for delivery estimates (e.g. *Free delivery by Tomorrow, 9 PM*).
+- **Specifications & Highlights**: Technical specs and warranty information.
+- **Action Buttons**:
+  - 🛒 **ADD TO CART** (Flipkart Yellow `#FF9F00`)
+  - ⚡ **BUY NOW** (Flipkart Orange `#FB641B`)
+
+### 3. Interactive 3D WebGL Viewer
+- **360° Free Rotation & Zoom**: Smooth OrbitControls with rotate and zoom limits, pan locked for a focused product showcase.
+- **Click & Hover to Customize**: Click directly on parts of the 3D model to select and recolor them, with subtle emissive hover highlighting.
+- **Smooth 60fps Color Lerp**: Color changes smoothly interpolate in `useFrame` rather than snapping abruptly.
+- **Turntable Mode**: Auto-rotate toggle for automatic 360° presentation.
+- **Lighting Environments**: Studio, Showroom, Sunset, and Interior presets with soft contact shadows.
+- **Wireframe Topology**: Inspect 3D polygon geometry with one click.
+- **High-Res Snapshot**: Download crisp PNG snapshots of customized products.
+
+---
+
+## 📦 5 Curated 3D Products in the Catalog
+
+| Product | Brand | Category | Price (₹) | Discount | 3D Customizable Parts |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Aerostride Pro Runner** | AEROSTRIDE | Men's Footwear | ₹2,499 | 58% off | Upper Mesh Body |
+| **Nordic Lounge Chair** | NORDIC LIVING | Home & Furniture | ₹14,999 | 54% off | Velvet Cushion, Wood Legs, Metal Hardware |
+| **Acro Chronograph Watch** | ACRO SWISS | Luxury Horology | ₹8,999 | 64% off | Strap & Clasp, Bezel Casing, Dial Face, Crown Pushers, Hands |
+| **Spectra Avant Sunglasses** | SPECTRA AVANT | Eyewear | ₹1,899 | 62% off | Acetate Frames, Polarized Lenses, Temples, Ear Hooks |
+| **Apex Cyber Combat Helmet** | APEX CYBER | Tech & Gaming | ₹4,999 | 61% off | Armor Plating & HUD Visor |
 
 ### 3. Real-Time Color Customization
 - **Multi-Part Isolation**: Recolors individual meshes and materials independently (e.g. Chair Fabric vs. Wood Frame vs. Metal Accents).
